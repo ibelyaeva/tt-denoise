@@ -47,7 +47,7 @@ def frmi_plot(in_file, spike_folder, file_path, legend=False, tr=None, stddev=Fa
     z_scored_data = np.nan_to_num(zscore( data, axis=-1))
     fname, ext = op.splitext(op.basename(in_file))
     
-    n_spikes, out_spikes, out_fft, spikes_list = sp.slice_wise_fft(in_file, spike_folder, spike_thres=4.)
+    n_spikes, out_spikes, out_fft, spikes_list = sp.slice_wise_fft(in_file, spike_folder, spike_thres=3.)
     dvar_file_name = fname + "_dvars.tsv"
     
     mask_file="epi_mask.nii"
@@ -116,10 +116,15 @@ def frmi_plot(in_file, spike_folder, file_path, legend=False, tr=None, stddev=Fa
 if __name__ == "__main__":
 
     #in_file = du.get_full_path_subject1()
-    in_file = "/work/scratch/tensor_completion/4D/noise/corrupted_subjects/artifacts/45-80-100/x_miss_45_80_100.nii"
+    #in_file = "/work/scratch/tensor_completion/4D/noise/corrupted_subjects/artifacts/45-80-100/x_miss_45_80_100.nii"
+    #fname, ext = op.splitext(op.basename(in_file))
+    #folder = "/work/scratch/tensor_completion/4D/noise/corrupted_subjects/artifacts/45-80-100/"
+    #spike_folder = "/work/scratch/tensor_completion/4D/noise/corrupted_subjects/artifacts/45-80-100/"
+    
+    in_file = "/work/scratch/tensor_completion/4D/noise/corrupted_subjects/artifacts/45/x_miss_45.nii"
     fname, ext = op.splitext(op.basename(in_file))
-    folder = "/work/scratch/tensor_completion/4D/noise/corrupted_subjects/artifacts/45-80-100/"
-    spike_folder = "/work/scratch/tensor_completion/4D/noise/corrupted_subjects/artifacts/45-80-100/"
+    folder = "/work/scratch/tensor_completion/4D/noise/corrupted_subjects/artifacts/45/"
+    spike_folder = "/work/scratch/tensor_completion/4D/noise/corrupted_subjects/artifacts/45/"
     
     fig_id = fname
     fig_path = os.path.join(folder,fig_id)
