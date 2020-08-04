@@ -101,10 +101,10 @@ class fMRIPlot(object):
                             height_ratios=[1] * (nrows - 1) + [5])
 
         grid_id = 0
-        for tsz, name, iszs in self.spikes:
-            spikesplot(tsz, title=name, outer_gs=grid[grid_id], tr=self.tr,
-                       zscored=iszs)
-            grid_id += 1
+        #for tsz, name, iszs in self.spikes:
+        #    spikesplot(tsz, title=name, outer_gs=grid[grid_id], tr=self.tr,
+                       #zscored=iszs)
+        #    grid_id += 1
 
         if self.confounds:
             palette = color_palette("husl", nconfounds)

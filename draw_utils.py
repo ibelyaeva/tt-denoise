@@ -74,11 +74,29 @@ def legend_outside(ncol, extra_text):
     box.set_figure(box.figure)
     return lgd    
     
-def draw_image(img, folder, fig_id, title=None):
+def draw_image(img, folder, fig_id, title=None, cut_coords=None):
     
     fig = plt.figure(frameon = False, figsize=(5,5))
         
-    scan_image = plotting.plot_epi(img, annotate=True, draw_cross=False, bg_img=None,black_bg=True, cmap='jet', cut_coords=None)     
+    scan_image = plotting.plot_epi(img, annotate=True, draw_cross=False, bg_img=None,black_bg=True, cmap='jet', cut_coords=cut_coords)     
+    
+    fg_color = 'white'
+    bg_color = 'black'
+    
+    if title:
+        fig.suptitle(title, color=fg_color, fontweight='normal', fontsize=10)
+      
+    fig_path = os.path.join(folder, fig_id)
+    
+    print ("Figure Path: " + fig_path)
+        
+    save_fig_pdf(fig_path)
+    
+def draw_image_z(img, folder, fig_id, title=None, cut_coords=None):
+    
+    fig = plt.figure(frameon = False, figsize=(5,5))
+        
+    scan_image = plotting.plot_epi(img, annotate=True, draw_cross=False, bg_img=None,black_bg=True, cmap='jet', display_mode='z', cut_coords=cut_coords)     
     
     fg_color = 'white'
     bg_color = 'black'

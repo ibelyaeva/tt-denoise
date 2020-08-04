@@ -6,7 +6,9 @@ from nilearn import image
 from scipy import stats
 import copy
 from math import isnan
-
+import nibabel as nb
+import os.path as op
+import metric_util as mt
 
 def get_max_rank(x):
     tensor_shape = x.shape
@@ -123,6 +125,25 @@ def tsc_z_score(x_hat,x_true, ten_ones, mask, z_score_mask):
 
 def isNaN(num):
     return num != num
-    
 
+def compute_tsnr(input_file, outputfile):
+    img = mt.read_image_abs_path(input_file)
+
+    header = img.header.copy()
+    vollist = [mt.read_image_abs_path(input_file) for filename in input_file]
+    data = np.concatenate([vol.get_data().reshape(
+    vol.get_shape()[:3] + (-1,)) for vol in vollist], axis=3)
     
+    data = np.nan_to_num(data)
+    
+    if data.dtype.kind == 'i':
+        header.set_data_dtype(np.float32)
+        data = data.astype(np.float32)
+    
+    meanimg = np.mean(data, axis=3)
+    stddevimg = np.std(data, axis=3)
+    tsnr = np.zeros_like(meanimg)
+    tsnr = meanimg/stddevimg
+    img = nb.Nifti1Image(tsnr, img.get_affine(), header)
+    nb.save(img, op.abspath(outputfile))
+    return img

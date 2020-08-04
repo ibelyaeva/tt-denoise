@@ -57,7 +57,7 @@ def separate_rayleigh_noise():
     root_dir = config.get('log', 'resuts.dir.rayleigh')
    
     lamda=0.000001
-    epsilon=1e-7
+    epsilon=1e-9
     
     snr_list = [40, 35, 25, 20, 15, 10, 5]
         
